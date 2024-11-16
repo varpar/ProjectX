@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Make sure this is imported
 
-const Login = () => {
+const Login = ({ setloggedin, setuserInfo }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -23,7 +23,9 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         console.log('Login successful:', data);
-        
+
+        setloggedin (true)
+        setuserInfo({ username: data.user.username });
         // Redirect to the homepage or desired route after successful login
         navigate('/'); // Change '/' to your desired route
       } else {
@@ -32,7 +34,7 @@ const Login = () => {
       }
     } catch (err) {
       setError('An error occurred while logging in.');
-          console.error(err);
+      console.error(err);
     }
   };
 

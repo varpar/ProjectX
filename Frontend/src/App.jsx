@@ -11,28 +11,33 @@ function App() {
 
   const [projects, setProjects] = useState([]);
   const [Loading, setLoading] = useState(true);
+  const [loggedin, setloggedin] = useState(false);
+  const [userInfo, setuserInfo] = useState({username:"User 69"});
 
   useEffect(() => {
    
     const getAll = async () =>{
-      try{
-        const all = await getProjects();
-        setProjects(all);
-      }
-      
-      
-      catch(err){
-        console.log(err);
-      }
-      finally{
-        setLoading(false);
+      if(loggedin){
+
+        try{
+          const all = await getProjects();
+          setProjects(all);
+        }
+        
+        
+        catch(err){
+          console.log(err);
+        }
+        finally{
+          setLoading(false);
+        }
       }
     }
 
     getAll();
 
 
-  }, []);
+  }, [loggedin]);
 
   return (
     <>
@@ -44,6 +49,7 @@ function App() {
 
       <Route path="/" element={(
           <div className='w-[100%]  justify-between px-4 gap-2 grid grid-cols-3'>
+            {userInfo.username}
             {projects.map((project) => (
             
               <ProjectCard 
@@ -53,11 +59,11 @@ function App() {
                 description={project.description}
               />
             ))}
-          </div>
+          </div>  
         )} />
 
-        <Route path='/Create' element={<Create/>}/>
-        <Route path='/Login' element={<Login/>}/>
+        <Route path='/create' element={<Create userInfo={ userInfo }/>}/>
+        <Route path="/login" element={<Login setloggedin={setloggedin} setuserInfo={setuserInfo} />} />
 
 
 

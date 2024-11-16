@@ -7,8 +7,8 @@ const Navbar = () => {
     <div className='w-1/2 justify-between mx-auto flex py-8'>
         <Link to="/" className='font-bold'>HUMBLE.</Link>
         <Link to="/" className=''>Projects</Link>
-        <Link to="/Create" className=''>Create</Link>
-        <Link to="/Login" className=''>Login</Link>
+        <Link to="/create" className=''>Create</Link>
+        <Link to="/login" className=''>Login</Link>
 
 
     </div>
