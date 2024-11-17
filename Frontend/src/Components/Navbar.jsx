@@ -14,7 +14,6 @@ const Navbar = ({ loggedin, setloggedin }) => {
       <Link to="/" className='font-bold'>HUMBLE.</Link>
       <Link to="/" className=''>Projects</Link>
 
-      {/* Show "Create" and "Profile" links only if logged in */}
       {loggedin && (
         <>
           <Link to="/create" className=''>Create</Link>
@@ -22,7 +21,6 @@ const Navbar = ({ loggedin, setloggedin }) => {
         </>
       )}
 
-      {/* Conditionally render Login or Logout button */}
       {!loggedin ? (
         <Link to="/login" className=''>Login</Link>
       ) : (

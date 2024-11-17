@@ -66,11 +66,18 @@ body {
   }
   
   .links-section ul {
-    list-style-type: none;
+    display: flex;
+    flex-direction: column;
     padding: 0;
   }
   
   .links-section li {
+    display: inline-block;
+    background-color: #444;
+    color: #ddd;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-right: 10px;
     margin-bottom: 10px;
   }
   
@@ -100,4 +107,3 @@ body {
   .actions-section button:hover {
     opacity: 0.8;
   }
-  
