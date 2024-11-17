@@ -1,18 +1,35 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
+const Navbar = ({ loggedin, setloggedin }) => {
+  const navigate = useNavigate();
 
-const Navbar = () => {
+  const handleLogout = () => {
+    setloggedin(false);
+    navigate('/'); // Redirect to home after logout
+  };
+
   return (
     <div className='w-1/2 justify-between mx-auto flex py-8'>
-        <Link to="/" className='font-bold'>HUMBLE.</Link>
-        <Link to="/" className=''>Projects</Link>
-        <Link to="/create" className=''>Create</Link>
+      <Link to="/" className='font-bold'>HUMBLE.</Link>
+      <Link to="/" className=''>Projects</Link>
+
+      {/* Show "Create" and "Profile" links only if logged in */}
+      {loggedin && (
+        <>
+          <Link to="/create" className=''>Create</Link>
+          <Link to="/profile" className=''>Profile</Link>
+        </>
+      )}
+
+      {/* Conditionally render Login or Logout button */}
+      {!loggedin ? (
         <Link to="/login" className=''>Login</Link>
-
-
+      ) : (
+        <button onClick={handleLogout} className='text-red-500'>Logout</button>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
