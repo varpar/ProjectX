@@ -1,69 +1,57 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Make sure this is imported
+import './Login.css';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ setloggedin, setuserInfo }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate(); // Correctly define navigate using the hook
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-    setError(''); // Reset any previous error
+  const handleLogin = (e) => {
+    e.preventDefault();
 
-    try {
-      const response = await fetch('http://localhost:8008/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Login successful:', data);
-
-        setloggedin (true)
-        setuserInfo({ username: data.user.username });
-        // Redirect to the homepage or desired route after successful login
-        navigate('/'); // Change '/' to your desired route
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message || 'Login failed');
-      }
-    } catch (err) {
-      setError('An error occurred while logging in.');
-      console.error(err);
+    // Simple login validation (you can replace this with an API call)
+    if (username === 'User' && password === 'password') {
+      setloggedin(true);
+      setuserInfo({ username: 'User' });
+      navigate('/'); // Navigate to the home page after successful login
+    } else {
+      setError('Invalid username or password');
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
+    <div className="login-container">
+      <form onSubmit={handleLogin} className="login-form">
+        <h2>Login</h2>
+        {error && <p className="error-message">{error}</p>}
+        
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
           <input
             type="text"
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter your username"
             required
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
             required
           />
         </div>
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-        <button type="submit">Login</button>
+        
+        <button type="submit" className="login-btn">Login</button>
       </form>
     </div>
   );
